@@ -71,7 +71,7 @@ func sliceFilter(value: Any?, arguments: [Any?]) throws -> Any? {
     throw TemplateSyntaxError("'dropFirst' filter takes at most one argument")
   }
 
-  let amount: Int = Int(arguments.first) ?? 0
+  let amount: Int = (arguments.first as? Int) ?? 0
   if let value = value as? String {
     if amount < 0 {
       return value.dropLast(-amount)
