@@ -66,6 +66,23 @@ func splitFilter(value: Any?, arguments: [Any?]) throws -> Any? {
   return value
 }
 
+func sliceFilter(value: Any?, arguments: [Any?]) throws -> Any? {
+  guard arguments.count < 2 else {
+    throw TemplateSyntaxError("'dropFirst' filter takes at most one argument")
+  }
+
+  let amount = Int(arguments.first) ?? 0
+  if let value = value as? String {
+    if amount < 0 {
+      return value.dropLast(-amount)
+    } else {
+      return value.dropFirst(amount)
+    }
+  }
+
+  return value
+}
+
 func indentFilter(value: Any?, arguments: [Any?]) throws -> Any? {
   guard arguments.count <= 3 else {
     throw TemplateSyntaxError("'indent' filter can take at most 3 arguments")
